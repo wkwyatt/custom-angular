@@ -12,6 +12,10 @@
 		<h3>Attribute based directive</h3>
 		Enter a character: <input type="text" alphabet>
 	</div>
+	<div>
+		<h3>Class custom directive</h3>
+		Enter a number: <input type="text" class="numeric">
+	</div>
 
 	<script type="text/javascript">
 	var myApp = angular.module('myApp', []);
@@ -24,6 +28,21 @@
 						e.currentTarget.style.backgroundColor = 'green';
 					} else {
 						e.currentTarget.style.backgroundColor = 'red';
+					}
+				});
+			}
+		}
+	});
+
+	myApp.directive('numeric', function() {
+		return {
+			restrict: 'C',
+			link: function(scope, elem, attr) {
+				elem.bind('keyup', function(e) {
+					if(/^[\d]+$/.test(e.currentTarget.value)){
+						e.currentTarget.style.backgroundColor = 'blue';
+					} else {
+						e.currentTarget.style.backgroundColor = 'yellow';
 					}
 				});
 			}
