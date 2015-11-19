@@ -7,7 +7,7 @@
 	<link rel="stylesheet" href="">
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
 </head>
-<body>
+<body ng-controller="customDirective">
 	<div>
 		<h3>Attribute based directive</h3>
 		Enter a character: <input type="text" alphabet>
@@ -15,6 +15,18 @@
 	<div>
 		<h3>Class custom directive</h3>
 		Enter a number: <input type="text" class="numeric">
+	</div>
+	<div>
+		<h3>Element custom directive</h3>
+		Select a value: <dropdown object="values"></dropdown>
+		Enter a value for the dropdown<input type="text" ng-model="val">
+		<button ng-click="add(values, val)">Add</button>
+	</div>
+	<div>
+		<h3>Element custom directive</h3>
+		Select a value: <dropdown object="students"></dropdown>
+		Enter a value for the dropdown<input type="text" ng-model="newStudent">
+		<button ng-click="add(students, newStudent)">Add</button>
 	</div>
 
 	<script type="text/javascript">
@@ -48,6 +60,33 @@
 			}
 		}
 	});
+
+	myApp.directive('dropdown', function() {
+		return {
+			restrict:'E',
+			scope: {
+				object: '='
+			},
+			template: '<select style="width:200px;"><option ng-repeat="i in data">{{i}}</option>',
+			controller: function($scope) {
+				$scope.data = $scope.object;
+				console.log($scope);
+				console.log($scope.object);
+				console.log("TEST!!");
+			}
+		}
+	});
+
+	myApp.controller('customDirective', function($scope) {
+		$scope.values = ['1','2','3','4','5','6'];
+		$scope.students = ['Freddy','Yohsuke','Andrew'];
+		$scope.add = function(array, val) {
+			if(val != "") {
+				array.push(val);
+				val = "";
+			}
+		}
+	})
 	</script>
 </body>
 </html>
